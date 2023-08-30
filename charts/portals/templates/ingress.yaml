@@ -51,3 +51,4 @@ spec:
               servicePort: 8000
               {{- end }}
     {{- end }}
+{{- end }}
