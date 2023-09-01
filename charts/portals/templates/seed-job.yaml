@@ -24,7 +24,7 @@ spec:
               value: {{ $value | quote }}
             {{- end }}
           {{- if .Values.migrateJob.seed }}
-          command: ["php", "artisan", "migrate:fresh", "--seed", "--no-interaction"]
+          command: ["php", "artisan", "migrate, "--seed", "--no-interaction"]
           {{- else }}
           command: ["php", "artisan", "migrate", "--no-interaction"]
           {{- end }}
