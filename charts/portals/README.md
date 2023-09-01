@@ -11,6 +11,14 @@ helm repo add portals https://fsr5-fhaachen.github.io/portals/
 helm upgrade --install portals portals/portals --namespace portals --create-namespace -f values.yaml
 ```
 
+## Database and Redis
+
+The chart does not install a database or redis. You have to install them yourself. 
+
+You could use the [postgresql operator](https://cloudnative-pg.io/) and [redis operator](https://ot-container-kit.github.io/redis-operator/) for kubernetes.
+
+If you want a deployment example, view [our deployment guide](https://github.com/fsr5-fhaachen/portals/blob/main/deploy/README.md) inside the portals repo.
+
 ## Values
 
 You can find the default values in the [values.yaml](values.yaml) file.

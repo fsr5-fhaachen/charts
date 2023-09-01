@@ -1,0 +1,33 @@
+{{- if or .Values.migrateJob.onInstall .Values.migrateJob.onUpgrade -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "portals.fullname" . }}-migrate-job
+  labels:
+    {{- include "portals.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: {{ if .Values.migrateJob.onInstall }}pre-install{{ end }}{{ if and .Values.migrateJob.onInstall .Values.migrateJob.onUpgrade }},{{ end }}{{ if .Values.migrateJob.onUpgrade }}pre-upgrade{{ end }}
+    helm.sh/hook-weight: "1"
+    helm.sh/hook-delete-policy: hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            {{- range $key, $value := .Values.environment }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          {{- if .Values.migrateJob.seed }}
+          command: ["php", "artisan", "migrate:fresh", "--seed", "--no-interaction"]
+          {{- else }}
+          command: ["php", "artisan", "migrate", "--no-interaction"]
+          {{- end }}
+      restartPolicy: Never
+  backoffLimit: 1
+{{- end }}

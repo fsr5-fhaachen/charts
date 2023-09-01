@@ -13,9 +13,10 @@ image:
 
 environment: 
   APP_NAME: Erstiwoche FB5
-  APP_ENV: local
+  APP_ENV: production
   APP_KEY: # insert app key here
   APP_DEBUG: "false"
+  APP_FORCE_HTTPS: "true"
   APP_URL: https://portals.fsr5.de
   TUTOR_PASSWORD: password # insert secret password here
   ADMIN_PASSWORD: admin # insert secret password here
@@ -40,8 +41,8 @@ environment:
 ingress:
   enabled: true
   className: "nginx"
-  annotations:
-    cert-manager.io/issuer: "letsencrypt-prod"
+  annotations: {}
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
   hosts:
     - portals.fsr5.de
   tls: true
@@ -59,3 +60,11 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+migrateJob:
+  onInstall: false
+  onUpgrade: false
+  seed: false
+
+disableReadinessProbe: false
+disableLivenessProbe: false
