@@ -28,6 +28,32 @@ spec:
           {{- else }}
           command: ["php", "artisan", "migrate", "--no-interaction"]
           {{- end }}
+          {{- if or .Values.migrateJob.tutorsCsvConfigMapName .Values.migrateJob.studentsCsvConfigMapName -}}
+          volumeMounts:
+            {{- if .Values.migrateJob.tutorsCsvConfigMapName -}}
+            - name: tutorsCsv
+              mountPath: /var/www/html/database/tutors.csv
+              subPath: tutors.csv
+            {{- end -}}
+            {{- if .Values.migrateJob.studentsCsvConfigMapName -}}
+            - name: studentsCsv
+              mountPath: /var/www/html/database/students.csv
+              subPath: students.csv
+            {{- end -}}
+          {{- end -}}
+      {{- if or .Values.migrateJob.tutorsCsvConfigMapName .Values.migrateJob.studentsCsvConfigMapName -}}
+      volumes:
+        {{- if .Values.migrateJob.tutorsCsvConfigMapName -}}
+        - name: tutorsCsv
+          configMap:
+            name: {{ .Values.migrateJob.tutorsCsvConfigMapName }}
+        {{- end -}}
+        {{- if .Values.migrateJob.studentsCsvConfigMapName -}}
+        - name: studentsCsv
+          configMap:
+            name: {{ .Values.migrateJob.studentsCsvConfigMapName }}
+        {{- end -}}
+      {{- end -}}
       restartPolicy: Never
   backoffLimit: 1
 {{- end }}

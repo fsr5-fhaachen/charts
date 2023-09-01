@@ -65,6 +65,8 @@ migrateJob:
   onInstall: false
   onUpgrade: false
   seed: false
+  tutorsCsvConfigMapName: ""
+  studentsCsvConfigMapName: ""
 
 disableReadinessProbe: false
 disableLivenessProbe: false
