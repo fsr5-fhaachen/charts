@@ -5,3 +5,7 @@ type: application
 version: 0.0.3
 appVersion: "2.1.0"
 home: github.com/fsr5-fhaachen/portals
+maintainers:
+  - name: Department of Electrical Engineering and Information Technology at the FH Aachen - University of Applied Sciences
+    email: fsr-fb5@fh-aachen.de
+    url: https://fsr5.de/
