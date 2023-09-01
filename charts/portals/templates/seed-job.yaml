@@ -24,36 +24,36 @@ spec:
               value: {{ $value | quote }}
             {{- end }}
           {{- if .Values.migrateJob.seed }}
-          command: ["php", "artisan", "migrate, "--seed", "--no-interaction"]
+          command: ["php", "artisan", "migrate", "--seed", "--no-interaction", "--force"]
           {{- else }}
-          command: ["php", "artisan", "migrate", "--no-interaction"]
+          command: ["php", "artisan", "migrate", "--no-interaction", "--force"]
           {{- end }}
-          {{- if or .Values.migrateJob.tutorsCsvConfigMapName .Values.migrateJob.studentsCsvConfigMapName -}}
+          {{- if or (ne .Values.migrateJob.tutorsCsvConfigMapName "") (ne .Values.migrateJob.studentsCsvConfigMapName "") }}
           volumeMounts:
-            {{- if .Values.migrateJob.tutorsCsvConfigMapName -}}
-            - name: tutorsCsv
-              mountPath: /var/www/html/database/tutors.csv
+            {{- if ne .Values.migrateJob.tutorsCsvConfigMapName "" }}
+            - name: tutors-csv
+              mountPath: /var/www/html/database/seeders/tutors.csv
               subPath: tutors.csv
-            {{- end -}}
-            {{- if .Values.migrateJob.studentsCsvConfigMapName -}}
-            - name: studentsCsv
-              mountPath: /var/www/html/database/students.csv
+            {{- end }}
+            {{- if ne .Values.migrateJob.studentsCsvConfigMapName "" }}
+            - name: students-csv
+              mountPath: /var/www/html/database/seeders/students.csv
               subPath: students.csv
-            {{- end -}}
-          {{- end -}}
-      {{- if or .Values.migrateJob.tutorsCsvConfigMapName .Values.migrateJob.studentsCsvConfigMapName -}}
+            {{- end }}
+          {{- end }}
+      {{- if or (ne .Values.migrateJob.tutorsCsvConfigMapName "") (ne .Values.migrateJob.studentsCsvConfigMapName "") }}
       volumes:
-        {{- if .Values.migrateJob.tutorsCsvConfigMapName -}}
-        - name: tutorsCsv
+        {{- if ne .Values.migrateJob.tutorsCsvConfigMapName "" }}
+        - name: tutors-csv
           configMap:
             name: {{ .Values.migrateJob.tutorsCsvConfigMapName }}
-        {{- end -}}
-        {{- if .Values.migrateJob.studentsCsvConfigMapName -}}
-        - name: studentsCsv
+        {{- end }}
+        {{- if ne .Values.migrateJob.studentsCsvConfigMapName "" }}
+        - name: students-csv
           configMap:
             name: {{ .Values.migrateJob.studentsCsvConfigMapName }}
-        {{- end -}}
-      {{- end -}}
+        {{- end }}
+      {{- end }}
       restartPolicy: Never
   backoffLimit: 1
 {{- end }}
