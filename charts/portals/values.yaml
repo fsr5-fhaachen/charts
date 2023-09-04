@@ -23,6 +23,7 @@ environment:
   APP_KEY:  # insert app key here
   APP_DEBUG: "false"
   APP_FORCE_HTTPS: "true"
+  APP_EVENT_TYPE: "demo"
   APP_URL: https://portals.fsr5.de
   TUTOR_PASSWORD: password  # insert secret password here
   ADMIN_PASSWORD: admin  # insert secret password here
