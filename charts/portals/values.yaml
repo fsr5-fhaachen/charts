@@ -1,5 +1,11 @@
 replicaCount: 1
 
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  averageCPUUtilization: 70
+
 nameOverride: ""
 fullnameOverride: ""
 
@@ -47,13 +53,13 @@ ingress:
     - portals.fsr5.de
   tls: true
 
-resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources:
+  limits:
+    cpu: 200m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 512Mi
 
 nodeSelector: {}
 
