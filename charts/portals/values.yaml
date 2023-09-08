@@ -4,7 +4,7 @@ hpa:
   enabled: true
   minReplicas: 1
   maxReplicas: 10
-  averageCPUUtilization: 70
+  averageCPUUtilization: 90
 
 nameOverride: ""
 fullnameOverride: ""
@@ -34,8 +34,8 @@ environment:
   DB_USERNAME: postgres
   DB_PASSWORD:  # insert db password here
   OCTANE_HTTPS: "true"
-  OCTANE_WORKERS: "4"
-  OCTANE_MAX_REQUESTS: "512"
+  OCTANE_WORKERS: "1"  # only one worker per cpu core should be started, see https://laravel.com/docs/10.x/octane#specifying-the-worker-count
+  OCTANE_MAX_REQUESTS: "512"  # set max "open" requests a octane worker can handle, see https://laravel.com/docs/10.x/octane#specifying-the-max-request-count
   WWWGROUP: "1000"
   WWWUSER: "1000"
   CACHE_DRIVER: redis
@@ -50,17 +50,21 @@ ingress:
   className: "nginx"
   annotations: {}
     # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # nginx.ingress.kubernetes.io/limit-rps: "500"
   hosts:
     - portals.fsr5.de
   tls: true
 
+# default ressources
+# should handle about 6 req/s per pod
+# scales linear with pod count (15 pods = 90 req/s, 30 pods = 180 req/s, ...)
 resources:
   limits:
-    cpu: 200m
-    memory: 512Mi
+    cpu: 150m
+    memory: 128Mi
   requests:
-    cpu: 200m
-    memory: 512Mi
+    cpu: 150m
+    memory: 128Mi
 
 nodeSelector: {}
 
@@ -69,11 +73,11 @@ tolerations: []
 affinity: {}
 
 migrateJob:
-  onInstall: false
-  onUpgrade: false
-  seed: false
+  onInstall: false  # run on helm install
+  onUpgrade: false  # run on helm upgrade
+  seed: false  # set to true to use migrate:fresh --seed, otherwise only migrate will be executed
   tutorsCsvConfigMapName: ""
   studentsCsvConfigMapName: ""
 
-disableReadinessProbe: false
-disableLivenessProbe: false
+disableReadinessProbe: false  # disable pod readiness probe (used for debugging)
+disableLivenessProbe: false  # disable pod liveness probe (used for debugging)
