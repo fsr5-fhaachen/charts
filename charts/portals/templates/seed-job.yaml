@@ -1,0 +1,59 @@
+{{- if or .Values.migrateJob.onInstall .Values.migrateJob.onUpgrade -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "portals.fullname" . }}-migrate-job
+  labels:
+    {{- include "portals.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: {{ if .Values.migrateJob.onInstall }}pre-install{{ end }}{{ if and .Values.migrateJob.onInstall .Values.migrateJob.onUpgrade }},{{ end }}{{ if .Values.migrateJob.onUpgrade }}pre-upgrade{{ end }}
+    helm.sh/hook-weight: "1"
+    helm.sh/hook-delete-policy: hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            {{- range $key, $value := .Values.environment }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          {{- if .Values.migrateJob.seed }}
+          command: ["php", "artisan", "migrate:fresh", "--seed", "--no-interaction", "--force"]
+          {{- else }}
+          command: ["php", "artisan", "migrate", "--no-interaction", "--force"]
+          {{- end }}
+          {{- if or (ne .Values.migrateJob.tutorsCsvConfigMapName "") (ne .Values.migrateJob.studentsCsvConfigMapName "") }}
+          volumeMounts:
+            {{- if ne .Values.migrateJob.tutorsCsvConfigMapName "" }}
+            - name: tutors-csv
+              mountPath: /var/www/html/database/seeders/tutors.csv
+              subPath: tutors.csv
+            {{- end }}
+            {{- if ne .Values.migrateJob.studentsCsvConfigMapName "" }}
+            - name: students-csv
+              mountPath: /var/www/html/database/seeders/students.csv
+              subPath: students.csv
+            {{- end }}
+          {{- end }}
+      {{- if or (ne .Values.migrateJob.tutorsCsvConfigMapName "") (ne .Values.migrateJob.studentsCsvConfigMapName "") }}
+      volumes:
+        {{- if ne .Values.migrateJob.tutorsCsvConfigMapName "" }}
+        - name: tutors-csv
+          configMap:
+            name: {{ .Values.migrateJob.tutorsCsvConfigMapName }}
+        {{- end }}
+        {{- if ne .Values.migrateJob.studentsCsvConfigMapName "" }}
+        - name: students-csv
+          configMap:
+            name: {{ .Values.migrateJob.studentsCsvConfigMapName }}
+        {{- end }}
+      {{- end }}
+      restartPolicy: Never
+  backoffLimit: 1
+{{- end }}
