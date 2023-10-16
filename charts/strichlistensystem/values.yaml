@@ -1,0 +1,83 @@
+replicaCount: 1
+
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  averageCPUUtilization: 90
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+image:
+  repository: ghcr.io/fsr5-fhaachen/strichlistensystem
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+environment:
+  APP_NAME: Gerolstein FB5
+  APP_ENV: production
+  APP_KEY:  # insert app key here
+  APP_DEBUG: "false"
+  APP_FORCE_HTTPS: "true"
+  APP_EVENT_TYPE: "demo"
+  APP_URL: https://portals.fsr5.de
+  APP_VPN_IP: # insert vpn ip here
+  CSV_EXPORT_PW: password # insert secret password here
+  DB_CONNECTION: pgsql
+  DB_HOST:  # insert db host here
+  DB_PORT: "5432"
+  DB_DATABASE: postgres
+  DB_USERNAME: postgres
+  DB_PASSWORD:  # insert db password here
+  OCTANE_HTTPS: "true"
+  OCTANE_WORKERS: "1"  # only one worker per cpu core should be started, see https://laravel.com/docs/10.x/octane#specifying-the-worker-count
+  OCTANE_MAX_REQUESTS: "512"  # set max "open" requests a octane worker can handle, see https://laravel.com/docs/10.x/octane#specifying-the-max-request-count
+  WWWGROUP: "1000"
+  WWWUSER: "1000"
+  CACHE_DRIVER: redis
+  SESSION_DRIVER: redis
+  SESSION_LIFETIME: "120"
+  REDIS_HOST:  # insert redis host here
+  REDIS_PASSWORD:  # insert redis password here
+  REDIS_PORT: "6379"
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # nginx.ingress.kubernetes.io/limit-rps: "500"
+  hosts:
+    - portals.fsr5.de
+  tls: true
+
+# default ressources
+# should handle about 6 req/s per pod
+# scales linear with pod count (15 pods = 90 req/s, 30 pods = 180 req/s, ...)
+resources:
+  limits:
+    cpu: 150m
+    memory: 128Mi
+  requests:
+    cpu: 150m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+migrateJob:
+  onInstall: false  # run on helm install
+  onUpgrade: false  # run on helm upgrade
+  seed: false  # set to true to use migrate:fresh --seed, otherwise only migrate will be executed
+  tutorsCsvConfigMapName: ""
+  studentsCsvConfigMapName: ""
+
+disableReadinessProbe: false  # disable pod readiness probe (used for debugging)
+disableLivenessProbe: false  # disable pod liveness probe (used for debugging)
