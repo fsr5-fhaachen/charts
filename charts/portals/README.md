@@ -32,6 +32,12 @@ environment:
   APP_URL: https://portals.fsr5.de
   TUTOR_PASSWORD: password # insert secret password here
   ADMIN_PASSWORD: admin # insert secret password here
+  APP_PUBLIC_API_SECRET: secret # insert secret password here
+  AWS_ACCESS_KEY_ID: secret # insert aws data here
+  AWS_SECRET_ACCESS_KEY: secret # insert aws data here
+  AWS_DEFAULT_REGION: eu-central-1 # insert aws region here
+  AWS_BUCKET: fsr5-fhaachen-portals # insert bucket name here
+  AWS_USE_PATH_STYLE_ENDPOINT: false
   DB_CONNECTION: pgsql
   DB_HOST: # insert db host here
   DB_PORT: "5432"
