@@ -30,8 +30,14 @@ environment:
   APP_NAME: Gerolstein FB5
   APP_KEY: # insert app key here
   APP_URL: https://strichlistensystem.fsr5.de
-  APP_VPN_IP: # insert vpn ip here
   CSV_EXPORT_PW: password # insert secret password here
+  APP_IS_VPN: false # set to true if app is behind vpn and the general overview should be loaded
+  APP_PORTALS_URL: https://portals.fsr5.de # insert portals url here
+  APP_PORTALS_API_SECRET: secret # insert secret password from portals here
+  APP_PORTALS_IMPORT_PW: 123 # insert secret password here
+  TELEGRAM_BOT_TOKEN: ""
+  TELEGRAM_BOT_INFO_CHANNEL_ID: ""
+  TELEGRAM_BOT_WARNING_CHANNEL_ID: ""
   DB_CONNECTION: pgsql
   DB_HOST: # insert db host here
   DB_PORT: "5432"
