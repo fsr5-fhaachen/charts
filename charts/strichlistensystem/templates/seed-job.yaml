@@ -8,7 +8,7 @@ metadata:
   annotations:
     helm.sh/hook: {{ if .Values.migrateJob.onInstall }}pre-install{{ end }}{{ if and .Values.migrateJob.onInstall .Values.migrateJob.onUpgrade }},{{ end }}{{ if .Values.migrateJob.onUpgrade }}pre-upgrade{{ end }}
     helm.sh/hook-weight: "1"
-    helm.sh/hook-delete-policy: hook-succeeded
+    helm.sh/hook-delete-policy: before-hook-creation
 spec:
   template:
     spec:
