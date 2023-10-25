@@ -27,7 +27,7 @@ environment:
   APP_URL: https://portals.fsr5.de
   TUTOR_PASSWORD: password  # insert secret password here
   ADMIN_PASSWORD: admin  # insert secret password here
-  APP_PUBLIC_API_SECRET: secret  # insert secret password here
+  PUBLIC_API_SECRET: secret  # insert secret password here
   AWS_ACCESS_KEY_ID: secret  # insert aws data here
   AWS_SECRET_ACCESS_KEY: secret  # insert aws data here
   AWS_DEFAULT_REGION: eu-central-1  # insert aws region here
