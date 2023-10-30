@@ -87,3 +87,10 @@ migrateJob:
 
 disableReadinessProbe: false  # disable pod readiness probe (used for debugging)
 disableLivenessProbe: false  # disable pod liveness probe (used for debugging)
+
+phpIni: |
+  upload_max_filesize = 100M
+  post_max_size = 100M
+  memory_limit = 128M
+  max_execution_time = 300
+  max_input_time = 300

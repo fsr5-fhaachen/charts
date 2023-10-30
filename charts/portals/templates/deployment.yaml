@@ -45,6 +45,11 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
+          volumeMounts:
+            - name: configmap
+              mountPath: /usr/local/etc/php/php.ini
+              readOnly: true
+              subPath: php.ini
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -57,3 +62,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: configmap
+          configMap:
+            name: {{ include "portals.fullname" . }}
