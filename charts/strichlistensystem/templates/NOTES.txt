@@ -1,0 +1,13 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+{{- if .Values.ingress.enabled }}
+You can access your site on your configured domain by visiting {{ index .Values.ingress.hosts 0 }}.
+{{- else }}
+You can access your site by port-forwarding to the service: "kubectl port-forward -n {{ .Release.Namespace }} svc/{{ include "strichlistensystem.fullname" . }} 8000:8000"
+{{- end }}
+
+
+
+Learn more about our "strichlistensystem" at https://github.com/fsr5-fhaachen/strichlistensystem.

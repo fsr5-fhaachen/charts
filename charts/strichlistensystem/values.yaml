@@ -12,27 +12,26 @@ fullnameOverride: ""
 podAnnotations: {}
 
 image:
-  repository: ghcr.io/fsr5-fhaachen/portals
+  repository: ghcr.io/fsr5-fhaachen/strichlistensystem
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
 environment:
-  APP_NAME: Erstiwoche FB5
+  APP_NAME: Gerolstein FB5
   APP_ENV: production
   APP_KEY:  # insert app key here
   APP_DEBUG: "false"
-  APP_FORCE_HTTPS: "true"
-  APP_EVENT_TYPE: "demo"
-  APP_URL: https://portals.fsr5.de
-  TUTOR_PASSWORD: password  # insert secret password here
-  ADMIN_PASSWORD: admin  # insert secret password here
-  PUBLIC_API_SECRET: secret  # insert secret password here
-  AWS_ACCESS_KEY_ID: secret  # insert aws data here
-  AWS_SECRET_ACCESS_KEY: secret  # insert aws data here
-  AWS_DEFAULT_REGION: eu-central-1  # insert aws region here
-  AWS_BUCKET: fsr5-fhaachen-portals  # insert bucket name here
-  AWS_USE_PATH_STYLE_ENDPOINT: false
+  APP_URL: https://strichlistensystem.fsr5.de
+  APP_PUBLIC_URL: https://strichlistensystem.fsr5.de
+  CSV_EXPORT_PW: password  # insert secret password here
+  APP_IS_VPN: false  # set to true if app is behind vpn and the general overview should be loaded
+  APP_PORTALS_URL: http://portals.portals.svc:8000  # insert portals url here
+  APP_PORTALS_API_SECRET: secret  # insert secret password from portals here
+  APP_PORTALS_IMPORT_PW: 123  # insert secret password here
+  TELEGRAM_BOT_TOKEN: ""
+  TELEGRAM_BOT_INFO_CHANNEL_ID: ""
+  TELEGRAM_BOT_WARNING_CHANNEL_ID: ""
   DB_CONNECTION: pgsql
   DB_HOST:  # insert db host here
   DB_PORT: "5432"
@@ -58,7 +57,7 @@ ingress:
     # cert-manager.io/cluster-issuer: "letsencrypt-prod"
     # nginx.ingress.kubernetes.io/limit-rps: "500"
   hosts:
-    - portals.fsr5.de
+    - strichlistensystem.fsr5.de
   tls: true
 
 # default ressources
@@ -82,8 +81,6 @@ migrateJob:
   onInstall: false  # run on helm install
   onUpgrade: false  # run on helm upgrade
   seed: false  # set to true to use migrate:fresh --seed, otherwise only migrate will be executed
-  tutorsCsvConfigMapName: ""
-  studentsCsvConfigMapName: ""
 
 disableReadinessProbe: false  # disable pod readiness probe (used for debugging)
 disableLivenessProbe: false  # disable pod liveness probe (used for debugging)

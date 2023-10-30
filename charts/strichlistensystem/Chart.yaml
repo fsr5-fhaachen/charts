@@ -1,0 +1,11 @@
+apiVersion: v2
+name: strichlistensystem
+description: Tally system for the first week of the Department of Electrical Engineering and Information Technology at FH Aachen - University of Applied Sciences.
+type: application
+version: 0.0.1
+appVersion: "2.0.0"
+home: github.com/fsr5-fhaachen/strichlistensystem
+maintainers:
+  - name: fsr5-fhaachen
+    email: fsr-fb5@fh-aachen.de
+    url: https://fsr5.de/

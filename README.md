@@ -20,6 +20,12 @@ The portals chart is located in the [`charts/portals`](./charts/portals/) folder
 
 See more about the chart in the [README](./charts/portals/README.md) of the chart.
 
+### Strichlistensystem
+
+The strichlistensystem chart is located in the [`charts/strichlistensystem`](./charts/strichlistensystem/) folder. It contains our [tally system](github.com/fsr5-fhaachen/strichlistensystem). 
+
+See more about the chart in the [README](./charts/strichlistensystem/README.md) of the chart.
+
 ## Authors
 
 👤 **Simon Ostendorf**
