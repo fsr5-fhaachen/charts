@@ -1,0 +1,6 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "portals.fullname" . }}
+data:
+  php.ini: {{- .Values.phpIni | toYaml | indent 2 }}
