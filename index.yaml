@@ -2,6 +2,23 @@ apiVersion: v1
 entries:
   portals:
   - apiVersion: v2
+    appVersion: 2.3.0
+    created: "2023-10-30T18:54:51.922949325Z"
+    description: Portals is a group allocation tool for the first week of the Department
+      of Electrical Engineering and Information Technology at the FH Aachen - University
+      of Applied Sciences.
+    digest: b0153deb4040b37d28d165eb5ddb2f5d44e6b62527ad6174e19c95fed124bf8b
+    home: github.com/fsr5-fhaachen/portals
+    maintainers:
+    - email: fsr-fb5@fh-aachen.de
+      name: fsr5-fhaachen
+      url: https://fsr5.de/
+    name: portals
+    type: application
+    urls:
+    - https://github.com/fsr5-fhaachen/charts/releases/download/portals-0.0.4/portals-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     appVersion: 2.1.0
     created: "2023-09-11T16:43:10.208924286Z"
     description: Portals is a group allocation tool for the first week of the Department
@@ -31,4 +48,21 @@ entries:
     urls:
     - https://github.com/fsr5-fhaachen/charts/releases/download/portals-0.0.2/portals-0.0.2.tgz
     version: 0.0.2
-generated: "2023-09-11T16:43:10.208932086Z"
+  strichlistensystem:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2023-10-30T18:54:52.085577438Z"
+    description: Tally system for the first week of the Department of Electrical Engineering
+      and Information Technology at FH Aachen - University of Applied Sciences.
+    digest: 26010e3b4081aed5a4a8b21ee0de7537637d3484c6ce84f65f78d742621f61a0
+    home: github.com/fsr5-fhaachen/strichlistensystem
+    maintainers:
+    - email: fsr-fb5@fh-aachen.de
+      name: fsr5-fhaachen
+      url: https://fsr5.de/
+    name: strichlistensystem
+    type: application
+    urls:
+    - https://github.com/fsr5-fhaachen/charts/releases/download/strichlistensystem-0.0.1/strichlistensystem-0.0.1.tgz
+    version: 0.0.1
+generated: "2023-10-30T18:54:52.085878051Z"
