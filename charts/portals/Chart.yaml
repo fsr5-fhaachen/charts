@@ -2,8 +2,8 @@ apiVersion: v2
 name: portals
 description: Portals is a group allocation tool for the first week of the Department of Electrical Engineering and Information Technology at the FH Aachen - University of Applied Sciences.
 type: application
-version: 0.0.6
-appVersion: "3.1.0"
+version: 0.0.7
+appVersion: "3.1.1"
 home: github.com/fsr5-fhaachen/portals
 maintainers:
   - name: fsr5-fhaachen
