@@ -32,17 +32,17 @@ spec:
           volumeMounts:
             {{- if ne .Values.migrateJob.tutorsCsvConfigMapName "" }}
             - name: tutors-csv
-              mountPath: /var/www/html/database/seeders/tutors.csv
+              mountPath: /app/database/seeders/tutors.csv
               subPath: tutors.csv
             {{- end }}
             {{- if ne .Values.migrateJob.telegramCsvConfigMapName "" }}
             - name: telegram-csv
-              mountPath: /var/www/html/database/seeders/telegram.csv
+              mountPath: /app/database/seeders/telegram.csv
               subPath: telegram.csv
             {{- end }}
             {{- if ne .Values.migrateJob.studentsCsvConfigMapName "" }}
             - name: students-csv
-              mountPath: /var/www/html/database/seeders/students.csv
+              mountPath: /app/database/seeders/students.csv
               subPath: students.csv
             {{- end }}
           {{- end }}
