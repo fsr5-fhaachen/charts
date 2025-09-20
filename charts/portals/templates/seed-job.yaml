@@ -28,12 +28,17 @@ spec:
           {{- else }}
           command: ["php", "artisan", "migrate", "--no-interaction", "--force"]
           {{- end }}
-          {{- if or (ne .Values.migrateJob.tutorsCsvConfigMapName "") (ne .Values.migrateJob.studentsCsvConfigMapName "") }}
+          {{- if or (ne .Values.migrateJob.tutorsCsvConfigMapName "") (ne .Values.migrateJob.telegramCsvConfigMapName "") (ne .Values.migrateJob.studentsCsvConfigMapName "") }}
           volumeMounts:
             {{- if ne .Values.migrateJob.tutorsCsvConfigMapName "" }}
             - name: tutors-csv
               mountPath: /var/www/html/database/seeders/tutors.csv
               subPath: tutors.csv
+            {{- end }}
+            {{- if ne .Values.migrateJob.telegramCsvConfigMapName "" }}
+            - name: telegram-csv
+              mountPath: /var/www/html/database/seeders/telegram.csv
+              subPath: telegram.csv
             {{- end }}
             {{- if ne .Values.migrateJob.studentsCsvConfigMapName "" }}
             - name: students-csv
@@ -41,12 +46,17 @@ spec:
               subPath: students.csv
             {{- end }}
           {{- end }}
-      {{- if or (ne .Values.migrateJob.tutorsCsvConfigMapName "") (ne .Values.migrateJob.studentsCsvConfigMapName "") }}
+      {{- if or (ne .Values.migrateJob.tutorsCsvConfigMapName "") (ne .Values.migrateJob.telegramCsvConfigMapName "") (ne .Values.migrateJob.studentsCsvConfigMapName "") }}
       volumes:
         {{- if ne .Values.migrateJob.tutorsCsvConfigMapName "" }}
         - name: tutors-csv
           configMap:
             name: {{ .Values.migrateJob.tutorsCsvConfigMapName }}
+        {{- end }}
+        {{- if ne .Values.migrateJob.telegramCsvConfigMapName "" }}
+        - name: telegram-csv
+          configMap:
+            name: {{ .Values.migrateJob.telegramCsvConfigMapName }}
         {{- end }}
         {{- if ne .Values.migrateJob.studentsCsvConfigMapName "" }}
         - name: students-csv
